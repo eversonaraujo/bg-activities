@@ -1,0 +1,50 @@
+version: "3.8"
+
+services:
+    app:
+        image: symfony-php8
+        container_name: "${APP_NAME}"
+        working_dir: /app
+        ports: 
+            - "8000:8000"
+        volumes: 
+            - "./:/app"
+        # networks:
+        #     - "${APP_NAME}_net"
+        depends_on: 
+            - sqlite3
+        restart: always
+        entrypoint: ["sh", "./entrypoint.sh"]
+
+    sqlite3:
+        image: nouchka/sqlite3:latest
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./db/:/root/db/
+        
+    # database:
+    #     image: postgres:13.2
+    #     container_name: "${APP_NAME}_database"
+    #     restart: always
+    #     environment:
+    #         POSTGRES_DB: gest
+    #         POSTGRES_USER: postgres
+    #         POSTGRES_PASSWORD: 123456
+    #     volumes:
+    #         - ./sfvar/pgdata:/var/lib/postgresql/data
+    #     networks:
+    #         - "${APP_NAME}_net"
+
+    # adminer:
+    #     image: adminer
+    #     container_name: "${APP_NAME}_adminer"
+    #     ports: 
+    #         - "8080:8080"
+    #     depends_on: 
+    #         - database
+    #     networks:
+    #         - "${APP_NAME}_net"
+
+networks:
+    links_net:

@@ -1,0 +1,3 @@
+<?php //App%255CEntity%255CLinks%2523setVisits
+
+return [PHP_INT_MAX, []];

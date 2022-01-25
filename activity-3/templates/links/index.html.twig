@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Links index{% endblock %}
+
+{% block body %}
+    <h1>Links index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Url</th>
+                <th>Shortlink</th>
+                <th>Visits</th>
+                <th>CreatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for link in links %}
+            <tr>
+                <td>{{ link.id }}</td>
+                <td>{{ link.url }}</td>
+                <td>{{ link.shortlink }}</td>
+                <td>{{ link.visits }}</td>
+                <td>{{ link.createdAt ? link.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('links_show', {'id': link.id}) }}">show</a>
+                    <a href="{{ path('links_edit', {'id': link.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('links_new') }}">Create new</a>
+{% endblock %}

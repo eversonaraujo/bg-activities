@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Gest</title>
+    </head>
+    <body style="font-family: Lato, Roboto, Arial;">
+        <div style="margin-top: 50px; display: flex; justify-content: center">
+        <div style="width: 610px; padding: 50px; border-radius: 12px; background: #f8fcfe;">
+            <div style="margin-bottom: 32px">
+                <img src="{{ absolute_url(asset('/assets/milk.png')) }}" style="width: 187px;">
+            </div>
+            <h2 style="margin-bottom: 17px; margin-top: 10px; font-weight: 700;">
+                {% block title %}{% endblock %}
+            </h2>
+            {% block body %}{% endblock %}
+
+            <br><br>
+            <small style="color: rgba(56, 56, 56, 0.8);">
+                Em caso de dúvidas entre em contato pelo email
+                <a href="mailto:eversonaraujo9@gmail.com" style="color: inherit">eversonaraujo9@gmail.com</a>
+            </small>
+        </div>
+    </div>
+    </body>
+</html>
