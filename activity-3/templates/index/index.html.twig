@@ -27,22 +27,22 @@
 
             <div class="border p-5 rounded shadow bg-white mt-5">
             
-                <div class="grid grid-cols-8 justify-between gap-5 font-bold">
+                <div class="grid grid-cols-10 justify-between gap-5 font-bold">
                     <div>ID</div>
                     <div class="col-span-3">Url</div>
-                    <div>Short Link</div>
+                    <div class="col-span-2">Short Link</div>
                     <div>Visits</div>
-                    <div>Created At</div>
+                    <div class="col-span-2">Created At</div>
                     <div>Actions</div>
                 </div>
             
-                <div class="grid grid-cols-8 justify-between gap-5 mt-3"
+                <div class="grid grid-cols-10 justify-between gap-5 mt-3"
                     v-if="links.length" v-for="link in links">
                         <div>${ link.id }</div>
                         <div class="col-span-3">${ String(link.url).slice(0, 34) }</div>
-                        <div>${ link.shortlink }</div>
+                        <div class="col-span-2">http://locahost:8000/access/${ link.shortlink }</div>
                         <div>${ link.visits }</div>
-                        <div>${ timestampToDate(link.createdAt) }</div>
+                        <div class="col-span-2">${ timestampToDate(link.createdAt) }</div>
                         <div>
                             <a target="_blank" :href="`/access/${link.shortlink}`">Visit</a>
                         </div>
