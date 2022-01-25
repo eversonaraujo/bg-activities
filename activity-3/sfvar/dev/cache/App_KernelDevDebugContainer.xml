@@ -364,9 +364,6 @@
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
     </service>
-    <service id="App\Utils\DataTransformer" class="App\Utils\DataTransformer" autowire="true" autoconfigure="true"/>
-    <service id="App\Utils\FormSerializer" class="App\Utils\FormSerializer" autowire="true" autoconfigure="true"/>
-    <service id="App\Utils\ImageUtils" class="App\Utils\ImageUtils" autowire="true" autoconfigure="true"/>
     <service id="App\Utils\StringUtils" class="App\Utils\StringUtils" autowire="true" autoconfigure="true"/>
     <service id="argument_metadata_factory" class="Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadataFactory"/>
     <service id="response_listener" class="Symfony\Component\HttpKernel\EventListener\ResponseListener">

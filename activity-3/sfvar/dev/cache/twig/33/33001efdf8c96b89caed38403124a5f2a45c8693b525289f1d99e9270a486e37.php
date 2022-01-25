@@ -86,7 +86,8 @@ class __TwigTemplate_265e225c3600cfef494e9c2a1e3da3e15fc1e76aba0016204581a7b01ff
 
         // line 6
         echo "
-    <div id=\"app\" class=\"h-screen bg-gray-200\">
+<div id=\"app\" class=\"h-screen bg-gray-200\">
+    <div v-if=\"ready\">
         <div class=\"p-10\">
             <h1 class=\"text-2xl mb-5\">URL Shorterify</h1>
             <div v-if=\"error\" class=\"p-3 py-1 rounded inline-flex items-center
@@ -106,37 +107,36 @@ class __TwigTemplate_265e225c3600cfef494e9c2a1e3da3e15fc1e76aba0016204581a7b01ff
                 <button type=\"submit\" class=\"bg-green-400 rounded-md p-3 py-2\">Add </button>
             </form>
 
-        <div class=\"table border p-5 rounded shadow bg-white mt-5\">
-        
-            <div class=\"grid grid-cols-8 justify-between gap-5 font-bold\">
-                <div>ID</div>
-                <div class=\"col-span-3\">Url</div>
-                <div>Short Link</div>
-                <div>Visits</div>
-                <div>Created At</div>
-                <div>Actions</div>
-            </div>
-        
-            <div class=\"grid grid-cols-8 justify-between gap-5 mt-3\"
-                v-if=\"links.length\" v-for=\"link in links\">
-                    <div>\${ link.id }</div>
-                    <div class=\"col-span-3\">\${ String(link.url).slice(0, 34) }</div>
-                    <div>\${ link.shortlink }</div>
-                    <div>\${ link.visits }</div>
-                    <div>\${ link.createdAt }</div>
-                    <div>
-                        <a target=\"_blank\" :href=\"`/access/\${link.shortlink}`\">Visit</a>
-                    </div>
-            </div>
+            <div class=\"border p-5 rounded shadow bg-white mt-5\">
             
-            <div v-else>
-                <td colspan=\"6\">no records found</td>
+                <div class=\"grid grid-cols-8 justify-between gap-5 font-bold\">
+                    <div>ID</div>
+                    <div class=\"col-span-3\">Url</div>
+                    <div>Short Link</div>
+                    <div>Visits</div>
+                    <div>Created At</div>
+                    <div>Actions</div>
+                </div>
+            
+                <div class=\"grid grid-cols-8 justify-between gap-5 mt-3\"
+                    v-if=\"links.length\" v-for=\"link in links\">
+                        <div>\${ link.id }</div>
+                        <div class=\"col-span-3\">\${ String(link.url).slice(0, 34) }</div>
+                        <div>\${ link.shortlink }</div>
+                        <div>\${ link.visits }</div>
+                        <div>\${ timestampToDate(link.createdAt) }</div>
+                        <div>
+                            <a target=\"_blank\" :href=\"`/access/\${link.shortlink}`\">Visit</a>
+                        </div>
+                </div>
+                
+                <div v-else>
+                    <td colspan=\"6\">no records found</td>
+                </div>
             </div>
-        
-    </div>
-
         </div>
     </div>
+</div>
 
 <script src=\"https://cdn.tailwindcss.com\"></script>
 <script src=\"https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js\"></script>
@@ -151,22 +151,23 @@ class __TwigTemplate_265e225c3600cfef494e9c2a1e3da3e15fc1e76aba0016204581a7b01ff
                 return {
                     links: [],
                     error: '',
+                    ready: false,
                     link: { url: '' },
                     message: 'Hello Vue!',
                     options: { method: 'GET' }
                 }
             }, 
             async mounted () {
-
+                
                 const response = await fetch ('/short',  this.options);
                 
                 if (response.ok) {
                     this.links = await response.json()
-                    return
+                } else {
+                    this.error = 'Falha ao carregar links =/.'
                 }
 
-                this.error = 'Falha ao carregar links =/.'
-                
+                this.ready = true
             }, 
             methods: {
                 async add () {
@@ -185,6 +186,12 @@ class __TwigTemplate_265e225c3600cfef494e9c2a1e3da3e15fc1e76aba0016204581a7b01ff
                     }
                     
                     this.error = 'Falha ao criar links =/.'
+                },
+                dateToPtBR (cdate) {
+                    return cdate ? new Intl.DateTimeFormat('en').format(cdate) : '';
+                },
+                timestampToDate (timest) {
+                    return new Date(timest * 1000).getTime() > 0 ? this.dateToPtBR(new Date(timest * 1000)) : '';
                 }
             }
         })
@@ -226,7 +233,8 @@ class __TwigTemplate_265e225c3600cfef494e9c2a1e3da3e15fc1e76aba0016204581a7b01ff
 
 {% block body %}
 
-    <div id=\"app\" class=\"h-screen bg-gray-200\">
+<div id=\"app\" class=\"h-screen bg-gray-200\">
+    <div v-if=\"ready\">
         <div class=\"p-10\">
             <h1 class=\"text-2xl mb-5\">URL Shorterify</h1>
             <div v-if=\"error\" class=\"p-3 py-1 rounded inline-flex items-center
@@ -246,37 +254,36 @@ class __TwigTemplate_265e225c3600cfef494e9c2a1e3da3e15fc1e76aba0016204581a7b01ff
                 <button type=\"submit\" class=\"bg-green-400 rounded-md p-3 py-2\">Add </button>
             </form>
 
-        <div class=\"table border p-5 rounded shadow bg-white mt-5\">
-        
-            <div class=\"grid grid-cols-8 justify-between gap-5 font-bold\">
-                <div>ID</div>
-                <div class=\"col-span-3\">Url</div>
-                <div>Short Link</div>
-                <div>Visits</div>
-                <div>Created At</div>
-                <div>Actions</div>
-            </div>
-        
-            <div class=\"grid grid-cols-8 justify-between gap-5 mt-3\"
-                v-if=\"links.length\" v-for=\"link in links\">
-                    <div>\${ link.id }</div>
-                    <div class=\"col-span-3\">\${ String(link.url).slice(0, 34) }</div>
-                    <div>\${ link.shortlink }</div>
-                    <div>\${ link.visits }</div>
-                    <div>\${ link.createdAt }</div>
-                    <div>
-                        <a target=\"_blank\" :href=\"`/access/\${link.shortlink}`\">Visit</a>
-                    </div>
-            </div>
+            <div class=\"border p-5 rounded shadow bg-white mt-5\">
             
-            <div v-else>
-                <td colspan=\"6\">no records found</td>
+                <div class=\"grid grid-cols-8 justify-between gap-5 font-bold\">
+                    <div>ID</div>
+                    <div class=\"col-span-3\">Url</div>
+                    <div>Short Link</div>
+                    <div>Visits</div>
+                    <div>Created At</div>
+                    <div>Actions</div>
+                </div>
+            
+                <div class=\"grid grid-cols-8 justify-between gap-5 mt-3\"
+                    v-if=\"links.length\" v-for=\"link in links\">
+                        <div>\${ link.id }</div>
+                        <div class=\"col-span-3\">\${ String(link.url).slice(0, 34) }</div>
+                        <div>\${ link.shortlink }</div>
+                        <div>\${ link.visits }</div>
+                        <div>\${ timestampToDate(link.createdAt) }</div>
+                        <div>
+                            <a target=\"_blank\" :href=\"`/access/\${link.shortlink}`\">Visit</a>
+                        </div>
+                </div>
+                
+                <div v-else>
+                    <td colspan=\"6\">no records found</td>
+                </div>
             </div>
-        
-    </div>
-
         </div>
     </div>
+</div>
 
 <script src=\"https://cdn.tailwindcss.com\"></script>
 <script src=\"https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js\"></script>
@@ -291,22 +298,23 @@ class __TwigTemplate_265e225c3600cfef494e9c2a1e3da3e15fc1e76aba0016204581a7b01ff
                 return {
                     links: [],
                     error: '',
+                    ready: false,
                     link: { url: '' },
                     message: 'Hello Vue!',
                     options: { method: 'GET' }
                 }
             }, 
             async mounted () {
-
+                
                 const response = await fetch ('/short',  this.options);
                 
                 if (response.ok) {
                     this.links = await response.json()
-                    return
+                } else {
+                    this.error = 'Falha ao carregar links =/.'
                 }
 
-                this.error = 'Falha ao carregar links =/.'
-                
+                this.ready = true
             }, 
             methods: {
                 async add () {
@@ -325,6 +333,12 @@ class __TwigTemplate_265e225c3600cfef494e9c2a1e3da3e15fc1e76aba0016204581a7b01ff
                     }
                     
                     this.error = 'Falha ao criar links =/.'
+                },
+                dateToPtBR (cdate) {
+                    return cdate ? new Intl.DateTimeFormat('en').format(cdate) : '';
+                },
+                timestampToDate (timest) {
+                    return new Date(timest * 1000).getTime() > 0 ? this.dateToPtBR(new Date(timest * 1000)) : '';
                 }
             }
         })
